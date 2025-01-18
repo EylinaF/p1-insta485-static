@@ -7,6 +7,7 @@ import click
 import jinja2
 from jinja2 import TemplateSyntaxError, TemplateNotFound
 
+
 @click.command(help="Templated static website generator.")
 @click.argument("input_dir", nargs=1, type=click.Path(exists=True))
 @click.option("-o", "--output", type=click.Path(), help='Output directory.')
@@ -39,7 +40,6 @@ def main(input_dir, output, verbose):
         autoescape=jinja2.select_autoescape(['html', 'xml']),
     )
 
-    
     for entry in config_list:
         render_template(entry, output_dir, template_env, verbose)
 
@@ -59,12 +59,12 @@ def render_template(entry, output_dir, template_env, verbose):
         template = template_env.get_template(template_name)
     except TemplateSyntaxError as e2:
         print(f"insta485generator error: '{template_name}'")
-        print(f"{e2.message}")
+        print(f"Line {e2.lineno}: {e2.message}")
         sys.exit(1)
     except TemplateNotFound:
         print(f"insta485generator error: '{template_name}' not found")
         sys.exit(1)
-        
+
     context = entry["context"]
     output = output_dir/url
     output.mkdir(parents=True, exist_ok=True)

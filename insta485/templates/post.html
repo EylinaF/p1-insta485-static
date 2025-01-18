@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>insta485</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="insta">
+            <div class="left">
+                <a href="/" class="logo">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+                <h2><a href="/" class="logo">Insta485</a></h2>
+            </div>
+            <div class="right">
+                <a class="insta" href="/explore/">Explore</a>
+                <a href="/users/{{logname}}/">{{logname}}</a>
+            </div>
+        </div>
+    </header>
+    <article>
+        <header>
+            <div class="insta">
+                <div class="left">
+                    <a href="/users/{{logname}}/">
+                        <img class="profile" src="{{owner_img_url}}" alt="{{logname}} profile picture">
+                    </a>
+                    <a href="/users/{{logname}}/"><b>{{logname}}</b></a>
+                </div>
+                <a href="/posts/{{postid}}/">{{timestamp}}</a>
+            </div>
+        </header>
+        <img src="{{img_url}}" alt="Post {{postid}}">
+        <footer>
+            {% if likes == 1 %} <p>{{likes }} like</p>
+            {% else %}
+            <p>{{likes }} likes</p>
+            {% endif %}
+
+            {% for comment in comments %}
+            <p><a href="/users/{{comment.owner}}/">
+                    <b>{{comment.owner}}</b>
+                </a> {{comment.text}}</p>
+            {% endfor %}
+        </footer>
+    </article>
+</body>
+
+</html>

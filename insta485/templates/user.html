@@ -4,22 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <title>insta485</title>
-    <link rel="stylesheet" href="/html/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
     <header>
-        <a href="/" class="logo">Insta485</a>
-        <a href="/html/explore">Explore</a>
-        <a href="/html/users/awdeorio">awdeorio</a>
+        <div class="insta">
+            <div class="left">
+                <a href="/" class="logo">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+                <h2><a href="/" class="logo">Insta485</a></h2>
+            </div>
+            <div class="right">
+                <a class="insta" href="/explore/">Explore</a>
+                <a href="/users/{{logname}}/">{{logname}}</a>
+            </div>
+        </div>
     </header>
     <main>
-        <h1>awdeorio</h1>
-        <p>2 posts • <a href="/html/users/awdeorio/followers">2 followers</a> • <a href="/users/awdeorio/following">2
-                following</a></p>
-        <p>Andrew DeOrio</p>
-        <img src="/html/images/IMG_2595.PNG" alt="Post 1">
-        <img src="/html/images/IMG_5121.JPG" alt="Post 1">
+        <h1>{{username}}</h1>
+        {% if logname == username %}
+        {% else %}
+        {% if logname_follows_username %}
+        <p>following</p>
+        {% else %}
+        <p>not following</p>
+        {% endif %}
+        {% endif %}
+        <p>
+            {% if total_posts == 1 %}
+            {{total_posts}} post
+            {% else %}
+            {{total_posts}} posts
+            {% endif %}
+            • <a href="/users/{{username}}/followers/">
+                {% if followers == 1 %}
+                {{followers}} follower
+                {% else %}
+                {{followers}} followers
+                {% endif %}
+            </a>
+            • <a href="/users/{{username}}/following/">
+                {{following}} following</a>
+        </p>
+
+
+        <p>{{fullname}}</p>
+        {% for post in posts %}
+        <a href="/posts/{{post.postid}}/"><img src="{{post.img_url}}" alt="Post {{post.postid}}"></a>
+        {% endfor %}
     </main>
 </body>
 

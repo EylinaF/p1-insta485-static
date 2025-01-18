@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# insta485test
+
+
+# Stop on errors, print commands
+set -Eeuo pipefail
+set -x
+
+
+# Test
+pytest tests/
+pycodestyle insta485generator
+pydocstyle insta485generator
+pylint insta485generator
+
+# Clean
+rm -rf insta485/html
+
+# Build
+insta485generator insta485
+
+# Validate
+html5validator --ignore JAVA_TOOL_OPTIONS --root html
+html5validator --ignore JAVA_TOOL_OPTIONS --root insta485/html

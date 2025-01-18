@@ -4,15 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <title>insta485</title>
-    <link rel="stylesheet" href="/html/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
     <header>
-        <a href="/" class="logo">Insta485</a>
-        <a href="/html/explore">Explore</a>
-        <a href="/html/users/awdeorio">awdeorio</a>
+        <div class="insta">
+            <div class="left">
+                <a href="/" class="logo">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+                <h2><a href="/" class="logo">Insta485</a></h2>
+            </div>
+            <div class="right">
+                <a class="insta" href="/explore/">Explore</a>
+                <a href="/users/{{logname}}/">{{logname}}</a>
+            </div>
+        </div>
     </header>
+    <main>
+        {% for post in posts %}
+        <article>
+            <header>
+                <div class="insta">
+                    <div class="left">
+                        <a href="/users/{{logname}}/">
+                            <img class="profile" src="{{post.owner_img_url}}" alt="{{logname}} profile picture">
+                            <b>{{logname}}</b>
+                        </a>
+                    </div>
+                    <a href="/posts/{{post.postid}}/">{{post.timestamp}}</a>
+                </div>
+            </header>
+            <img src="{{post.img_url}}" alt="Post {{post.postid}}">
+            <footer>
+                {% if post.likes == 1 %} <p>{{post.likes }} like</p>
+                {% else %}
+                <p>{{post.likes }} likes</p>
+                {% endif %}
+
+                {% for comment in post.comments %}
+                <p><a href="/users/{{comment.owner}}/">
+                        <b>{{comment.owner}}</b>
+                    </a> {{comment.text}}</p>
+                {% endfor %}
+            </footer>
+        </article>
+        {% endfor %}
+    </main>
 </body>
 
 </html>
